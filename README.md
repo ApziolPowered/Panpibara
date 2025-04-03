@@ -1,2 +1,0 @@
-# Panpibara
-Proyecto Lua
