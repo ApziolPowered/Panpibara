@@ -1,80 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet"> 
+    
     <link rel="stylesheet" href="Estilos/Panpibarastyle.css" />
     <title>Panpibara - Cafetería</title>
     
 </head>
 <body>
     <header>
-
-        <img class= "log" src="Imagenes/logo.png" alt="logo"> 
-        <div class="logo" style="margin: 0;
-            font-family: 'Dancing Script',cursive;
-            color: white;
-            line-height: 2.0; 
-            font-size: 45px;"
-        ></div>
-        <nav>
-            <ul class="head">
-                <li><a href="#home">Página principal</a></li>
-                <li><a href="#menu">Menú</a></li>
-                <li><a href="#ubication">Ubicación</a></li>
-            </ul>
-        </nav>
+        <div id="top-header" style="display: flex; align-items: center; justify-content: space-between;">
+            <!-- Logo -->
+            
+            <div id="logo">
+                <img src="Imagenes/logo.png" alt="Logo" style="width: auto; height: 80px;" />
+            </div>
+            
+    
+            <!-- Menú de navegación -->
+            <div id="header-image-menu">
+                <nav>
+                    <ul style="display: flex; gap: 20px; list-style: none; padding: 0;">
+                        <li class="active">
+                            <a href="#" style="font-size: 25px; text-decoration: none; color: white;">Pagina principal</a>
+                        </li>
+                        <li>
+                            <a href="#" style="font-size: 25px; text-decoration: none; color: white;">Sobre nosotros</a>
+                        </li>
+                        <li>
+                            <a href="#" style="font-size: 25px; text-decoration: none; color: white;">Menu</a>
+                        </li>
+                        <li>
+                            <a href="#" style="font-size: 25px; text-decoration: none; color: white;">Ubicacion</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+    
+            <!-- Imagen de perfil y nombre de usuario -->
+            <div id="user-profile" style="display: flex; align-items: center; gap: 10px;">
+                <img src="Imagenes/imagenPerfil.webp" alt="Perfil" style="width: 50px; height: 50px; border-radius: 100%; border: 2px solid white;">
+                <span id="username" style="font-size: 20px; color: white;">Usuario Accedido</span>
+            </div>
+        </div>
     </header>
     
     <div class="section">
-        
-        <img src="Imagenes/espresso.jpeg" alt="Conchas"> 
-        <img class="marco" src="Imagenes/marco-cafe.png">
+        <div class="contenedor"></div>
+        <img class="imagen" src="Imagenes/espresso.jpeg" alt="Conchas"> 
+        <img class="marco" src="Imagenes/marco-cafe.png" style="width:840px; height: 780px;margin-right: -40px;">
         
         <div class="content">
             <h2>Espresso</h2>
-            <p class="parrafo1">Clásico..................................................................................$20</p>
-            <p class="parrafo1">Doble....................................................................................$30</p>
-            <p class="parrafo1">Macchiato.............................................................................$35</p>
-            <p class="parrafo1">Ristretto...............................................................................$25</p>
+            <p class="parrafo1"><span>Clásico</span><span>$20.00</span></p>
+            <p class="parrafo1"><span>Doble</span><span>$30.00</span></p>
+            <p class="parrafo1"><span>Macchiato</span><span>$35.00</span></p>
+            <p class="parrafo1"><span>Ristretto</span><span>$25.00</span></p>
         </div>
     </div>
 
     <div class="section">
-        <img src="Imagenes/capuccino.jpg" alt="Cuernitos">
-        <img class="marco2" src="Imagenes/marco-cafe.png">
+        <div class="contenedor2"></div>
+        <img class="imagen" src="Imagenes/capuccino.jpg" alt="Cuernitos">
+        <img class="marco2" src="Imagenes/marco-cafe.png" style="width:840px; 
+    height: 780px;margin-right: -240px;">
         <div class="content">
             <h2>Capuccino</h2>
-            <p class="parrafo1">Clásico.........................................................................$25</p>
-            <p class="parrafo1">Vainilla........................................................................$25</p>
-            <p class="parrafo1">Crema..........................................................................$30</p>
-            <p class="parrafo1">Chocolate.....................................................................$35</p>
+            <p class="parrafo2"><span>Clásico</span><span>$25.00</span></p>
+            <p class="parrafo2"><span>Vainilla</span><span>$25.00</span></p>
+            <p class="parrafo2"><span>Crema</span><span>$30.00</span></p>
+            <p class="parrafo2"><span>Chocolate</span><span>$35.00</span></p>
         </div>
     </div>
 
     <div class="section">
-        <img src="Imagenes/late.jpg" alt="Donas">
-        <img class="marco" src="Imagenes/marco-cafe.png">
+        <div class="contenedor"></div>
+        <img class="imagen" src="Imagenes/late.jpg" alt="Donas">
+        <img class="marco" src="Imagenes/marco-cafe.png" style="width:840px; height: 780px;margin-right: -40px;">
         <div class="content">
             <h2>Latte</h2>
-            <p class="parrafo1">Clásico...................................................................................$35</p>
-            <p class="parrafo1">Caramelo...............................................................................$40</p>
-            <p class="parrafo1">Almendra..............................................................................$45</p>
-            <p class="parrafo1">Especiado.............................................................................$50</p>
+            <p class="parrafo1"><span>Clásico</span><span>$35.00</span></p>
+            <p class="parrafo1"><span>Caramelo</span><span>$40.00</span></p>
+            <p class="parrafo1"><span>Almendra</span><span>$45.00</span></p>
+            <p class="parrafo1"><span>Especiado</span><span>$50.00</span></p>
         </div>
     </div>
 
     <div class="section">
-        <img src="Imagenes/frio.jpg" alt="Cupcakes">
-        <img class="marco2" src="Imagenes/marco-cafe.png">
+        <div class="contenedor2"></div>
+        <img class="imagen" src="Imagenes/frio.jpg" alt="Cupcakes">
+        <img class="marco2" src="Imagenes/marco-cafe.png" style="width:840px; 
+    height: 780px;margin-right: -240px;">
         <div class="content">
             <h2>Café Frío</h2>
-            <p class="parrafo1">Cold Brew.....................................................................$45</p>
-            <p class="parrafo1">Frappé..........................................................................$50</p>
-            <p class="parrafo1">Moca Frío.....................................................................$50</p>
-            <p class="parrafo1">Vainilla Frío.................................................................$30</p>
+            <p class="parrafo2"><span>Cold Brew</span><span>$45.00</span></p>
+            <p class="parrafo2"><span>Frappé</span><span>$50.00</span></p>
+            <p class="parrafo2"><span>Moca Frío</span><span>$40.00</span></p>
+            <p class="parrafo2"><span>Vainilla Frío</span><span>$35.00</span></p>
         </div>
     </div>
-
+    <br><br><br><br><br><br><br><br><br><br><br><br>
     <footer class="footer">
         <div>
             <h3>POLÍTICAS</h3>
@@ -88,7 +112,7 @@
             <a href="chi">¿Quiénes somos?</a>
         </div>
         <div class="logo">
-            <img src="Imagenes/footer.png" alt="Panpibara Logo" style="height: 150px; width: 160px;">
+            <img src="Imagenes/footer.png" alt="Panpibara Logo" style="height: 150px; width: 160px; border-radius: -10px;">
             
         </div>
     </footer>
