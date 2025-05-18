@@ -14,17 +14,17 @@ if (!$conn)
 $nombre = $_POST["txtusername"];
 $contrasenia = $_POST["txtpassword"];
 
-$query = mysqli_query($conn,"SELECT * FROM usuarios WHERE nombre = '".$nombre."' and contrasenia = '".$contrasenia."'");
+$query = mysqli_query($conn,"SELECT * FROM usuario WHERE nombreUsuario = '".$nombre."' and contrasenia = '".$contrasenia."'");
 $nr = mysqli_num_rows($query);
 
 if($nr == 1)
 {
-	//header("Location: pagina.html")
+	header("Location: principal.html");
 	echo "Bienvenido:" .$nombre;
 }
 else if ($nr == 0) 
 {
-	//header("Location: login.html");
+	header("Location: login.html");
 	echo "No ingreso"; 
 	echo "<script> alert('Error');window.location= 'login.html' </script>";
 }
