@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panpibara - Tienda</title>
+  <link rel="stylesheet" href="Estilos/Panpibarastyle.css" />
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+    }
+
+    .producto-scroll {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 20px;
+      padding: 10px 20px;
+    }
+
+    .producto-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .card {
+      background-image: url("Imagenes/card.png");
+      background-size: 350px 350px;
+      background-position: center;
+      border-radius: 15px;
+      width: 250px;
+      height: auto;
+      flex: 0 0 auto;
+      text-align: center;
+      overflow: visible;
+      color: rgb(0, 0, 0);
+    }
+
+    .card img {
+      width: 240px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 15px;
+      transition: transform 0.8s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.05);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin: 10px 0 5px;
+    }
+
+    .card p {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .card button {
+      background-color: #8B4513;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px 0 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .categoria {
+      text-align: center;
+      font-size: 30px;
+      color: #4B2E20;
+      margin-top: 40px;
+    }
+
+    .contenedor-scroll {
+      padding-top: 110px;
+      padding-left: 110px;
+      padding-right: 120px;
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .producto-scroll-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .scroll-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background-color: #8B4513;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      font-size: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0.8;
+    }
+
+    .scroll-btn.izq {
+      left: -25px;
+    }
+
+    .scroll-btn.der {
+      right: -25px;
+    }
+
+    #carrito-modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+#carrito-contenido {
+  background: #fff;
+  margin: 5% auto;
+  padding: 20px 25px;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  max-height: 80%;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #6A3F37;
+}
+
+#cerrar-carrito {
+  font-size: 22px;
+  color: #6A3F37;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.carrito-items {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.carrito-items li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding: 8px 0;
+  font-size: 16px;
+}
+
+.carrito-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #f9f4f0;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d4c1b5;
+  color: #4B2E20;
+}
+
+.carrito-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-cancelar,
+.btn-confirmar {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.btn-cancelar {
+  background-color: #c44;
+  color: white;
+}
+
+.btn-confirmar {
+  background-color: #4B2E20;
+  color: white;
+}
+
+    .btn-carrito {
+      background-color: #8b45136c;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    #aviso {
+      position: fixed;
+      top: 145px; /* Ajusta si el header es más alto */
+      right: 100px;
+      background-color: #6a3f37a1;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 1000;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+
+#boton-carrito-flotante {
+  position: fixed;
+  top: 140px;
+  right: 20px;
+  background-color: #6A3F37;
+  color: white;
+  border: none;
+  padding: 12px 15px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 2000; /* Aumenta el z-index */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+}
+
+#boton-carrito-flotante:hover {
+  transform: scale(1.1);
+}
+
+.input-cantidad {
+  width: 60px;
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-cantidad:focus {
+  border-color: #a0522d; /* color café */
+  box-shadow: 0 0 3px rgba(160, 82, 45, 0.5);
+}
+
+
+#recibo-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.recibo-contenido {
+  background-color: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: left;
+  font-family: 'Courier New', Courier, monospace;
+  color: #333;
+  position: relative;
+  border: 1px solid #ccc;
+}
+
+.recibo-contenido h2 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: #6A3F37;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  border-bottom: 2px dashed #6A3F37;
+  padding-bottom: 0.5rem;
+}
+
+#receiptContent p {
+  margin: 0.4rem 0;
+  font-weight: 600;
+  font-size: 1rem;
+  border-bottom: 1px dotted #ddd;
+  padding-bottom: 3px;
+}
+
+#receiptContent p:last-child {
+  border-bottom: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  color: #4B2E20;
+}
+
+.recibo-contenido button {
+  cursor: pointer;
+  margin-top: 1rem;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: #6A3F37;
+  color: white;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+.recibo-contenido button:hover {
+  background-color: #4B2E20;
+}
+
+
+.hidden {
+  display: none;
+}
+
+
+  </style>
+</head>
+<body>
+  <header>
+    <div id="top-header" style="display: flex; align-items: center; justify-content: space-between;">
+      <div id="logo">
+        <img src="Imagenes/logo.png" alt="Logo" style="height: 80px;">
+      </div>
+      <nav>
+        <ul style="display: flex; gap: 20px; list-style: none;">
+          <li><a href="principal.html" style="font-size: 25px; color: white; text-decoration: none;">Página principal</a></li>
+          <li><a href="subscripcion.html" style="font-size: 25px; color: white; text-decoration: none;">Membresias</a></li>
+          <li><a href="#" style="font-size: 25px; color: white; text-decoration: none;">Sobre nosotros</a></li>
+          <li><a href="panpibaracafe.html" style="font-size: 25px; color: white; text-decoration: none;">Menú</a></li>
+          <li><a href="#" style="font-size: 25px; color: white; text-decoration: none;">Ubicación</a></li>
+        </ul>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="Imagenes/imagenPerfil.webp" alt="Perfil" style="width: 50px; height: 50px; border-radius: 50%;">
+        <span style="color: white; font-size: 20px;">Usuario</span>
+        
+      </div>
+      
+    </div>
+  </header>
+
+  <!-- Las secciones se cargarán aquí dinámicamente -->
+   <div id="aviso">¡Producto agregado al carrito!</div>
+   <button onclick="abrirCarrito()" id="boton-carrito-flotante">🛒</button>
+
+  <!-- Modal Carrito -->
+  <div id="carrito-modal">
+    <div id="carrito-contenido">
+      <div class="modal-header">
+        <h2>🛒 Carrito de Compras</h2>
+        <span id="cerrar-carrito" onclick="cerrarCarrito()">✖</span>
+      </div>
+      <ul id="lista-carrito" class="carrito-items"></ul>
+      <div class="carrito-total">
+        <span>Total:</span>
+        <strong id="total-carrito">$0.00</strong>
+      </div>
+      <div class="carrito-acciones">
+        <button onclick="vaciarCarrito()" class="btn-cancelar">Vaciar</button>
+        <button onclick="finalizarPedido()" class="btn-confirmar">Finalizar Pedido</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="recibo-modal">
+  <div class="recibo-contenido">
+    <div style="display: flex; justify-content: center; align-items: center;">
+      
+      <img src="Imagenes/logo_blanco2.png" alt="Mi imagen2" style="width: 250px; height: 100px;">
+    </div>
+    <h2 class="modal-header">Recibo de compra</h2>
+    <div id="receiptContent">
+      
+    </div>
+    <button onclick="closeReceiptModal()" class="btn-confirmar">
+      Cerrar
+    </button>
+    <button onclick="ConfirmarPedido()" class="btn-confirmar">
+      Confirmar Pedido
+    </button>
+    
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div>
+      <h3>POLÍTICAS</h3>
+      <a href="#">Términos y Condiciones</a>
+      <a href="#">Aviso de Privacidad</a>
+      <a href="#">Reembolsos</a>
+    </div>
+    <div>
+      <h3>SOBRE NOSOTROS</h3>
+      <a href="#">Bolsa de trabajo</a>
+      <a href="#">¿Quiénes somos?</a>
+    </div>
+    <div class="logo">
+      <img src="Imagenes/footer.png" alt="Logo Panpibara" style="height: 150px; width: 160px;">
+    </div>
+  </footer>
+
+  <script>
+    const carrito = [];
+
+function agregarCarrito(nombre, precio) {
+  const index = carrito.findIndex(item => item.nombre === nombre);
+  if (index !== -1) {
+    carrito[index].cantidad += 1;
+  } else {
+    carrito.push({ nombre, precio, cantidad: 1 });
+  }
+  actualizarCarrito();
+  mostrarAviso();
+}
+
+
+    function mostrarAviso() {
+      const aviso = document.getElementById('aviso');
+      aviso.style.display = 'block';
+
+      // Ocultar después de 5 segundos
+      setTimeout(() => {
+        aviso.style.display = 'none';
+      }, 2000);
+    }
+
+function actualizarCarrito() {
+  const lista = document.getElementById("lista-carrito");
+  const totalTexto = document.getElementById("total-carrito");
+  lista.innerHTML = '';
+
+  let total = 0;
+
+  carrito.forEach((item, index) => {
+    const li = document.createElement('li');
+
+    li.innerHTML = `
+      <span>${item.nombre}</span>
+      <input type="number" min="1" value="${item.cantidad}" class="input-cantidad" 
+             onchange="cambiarCantidad(${index}, this.value)">
+      <span>$${(item.precio * item.cantidad).toFixed(2)}</span>
+    `;
+
+    lista.appendChild(li);
+    total += item.precio * item.cantidad;
+  });
+
+  totalTexto.textContent = `Total: $${total.toFixed(2)}`;
+}
+
+function cambiarCantidad(index, nuevaCantidad) {
+  const cantidad = parseInt(nuevaCantidad);
+  if (isNaN(cantidad) || cantidad < 1) {
+    carrito.splice(index, 1); // Eliminar si se pone 0 o valor inválido
+  } else {
+    carrito[index].cantidad = cantidad;
+  }
+  actualizarCarrito();
+}
+
+
+
+    function abrirCarrito() {
+      document.getElementById('carrito-modal').style.display = 'block';
+    }
+
+    function cerrarCarrito() {
+      document.getElementById('carrito-modal').style.display = 'none';
+    }
+
+    function scrollIzquierda(btn) {
+      const scroll = btn.parentElement.querySelector('.producto-scroll');
+      scroll.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+
+    function scrollDerecha(btn) {
+      const scroll = btn.parentElement.querySelector('.producto-scroll');
+      scroll.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('conexionPedidos.php')
+        .then(response => response.json())
+        .then(data => mostrarProductos(data))
+        .catch(error => console.error('Error al cargar productos:', error));
+    });
+
+    function mostrarProductos(productos) {
+  if (!productos || productos.length === 0) {
+    document.body.insertAdjacentHTML('beforeend', '<p style="color:red;">No se cargaron productos</p>');
+    return;
+  }
+
+  const categorias = {};
+
+  productos.forEach(p => {
+    const key = p.categoria;
+    if (!categorias[key]) categorias[key] = [];
+    categorias[key].push(p);
+  });
+
+  const contenedor = document.body;
+
+  Object.keys(categorias).forEach(categoria => {
+    const seccion = document.createElement('div');
+    seccion.classList.add('contenedor-scroll');
+    seccion.innerHTML = `
+      <h2 class="categoria">${categoria}</h2>
+      <div class="producto-scroll-wrapper">
+        <button class="scroll-btn izq" onclick="scrollIzquierda(this)">←</button>
+        <div class="producto-scroll">
+          ${categorias[categoria].map(prod => {
+            const imagen = prod.imagen_url ? prod.imagen_url : 'imagenes/default.jpg'; //  Imagen por defecto
+            return `
+              <div class="card">
+                <img src="${imagen}" alt="${prod.nombre}">
+                <h3>${prod.nombre}</h3>
+                <p>$${parseFloat(prod.precio).toFixed(2)}</p>
+                <button onclick="agregarCarrito('${prod.nombre}', ${parseFloat(prod.precio)})">Agregar</button>
+              </div>
+            `;
+          }).join('')}
+        </div>
+        <button class="scroll-btn der" onclick="scrollDerecha(this)">→</button>
+      </div>
+    `;
+    contenedor.insertBefore(seccion, document.getElementById('carrito-modal'));
+  });
+}
+
+function vaciarCarrito() {
+  carrito.length = 0; // Vacía el arreglo
+  actualizarCarrito();
+  alert("El carrito ha sido vaciado.");
+}
+
+  function finalizarPedido() {
+  const receiptContent = document.getElementById("receiptContent"); // Aquí va el div donde pones el contenido
+  receiptContent.innerHTML = ''; // Limpiar contenido previo
+
+  let total = 0;
+
+  carrito.forEach(item => {
+    const line = document.createElement('p');
+    line.textContent = `${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}`;
+    receiptContent.appendChild(line);
+    total += item.precio * item.cantidad;
+  });
+
+  const totalLine = document.createElement('p');
+  totalLine.style.fontWeight = 'bold';
+  
+  totalLine.textContent = `Total: $${total.toFixed(2)}`;
+  receiptContent.appendChild(totalLine);
+
+  // Mostrar modal del recibo
+  document.getElementById('recibo-modal').style.display = 'flex';
+
+  // Vaciar carrito después de finalizar pedido
+  carrito.length = 0;
+  actualizarCarrito();
+}
+
+function closeReceiptModal() {
+  document.getElementById('recibo-modal').style.display = 'none';
+}
+
+
+
+
+  </script>
+</body>
+</html>
