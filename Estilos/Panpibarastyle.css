@@ -228,3 +228,13 @@ footer {
     margin-left: 1cm;
 }
 
+#user-profile {
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+#user-profile:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* o el color que combine con tu diseño */
+  transform: scale(1.05); /* pequeño zoom para efecto elegante */
+}

@@ -440,4 +440,25 @@ body.show-chatbot .chatbot-popup {
         }
         
         
-        
+        #user-profile {
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+#user-profile:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* o el color que combine con tu diseño */
+  transform: scale(1.05); /* pequeño zoom para efecto elegante */
+}
+
+
+.producto img {
+  transition: transform 0.3s ease;
+  border-radius: 10px; /* Opcional, mejora visual */
+  display: block;
+}
+
+.producto img:hover {
+  transform: scale(1.05);
+}
+

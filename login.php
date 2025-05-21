@@ -1,33 +1,30 @@
 <?php
+// login.php
+header('Content-Type: application/json');
 
-$dbhost = "localhost";
-$dbuser = "root";
-$dbpass = "";
-$dbname = "login_db";
+$usuario = $_POST['txtusername'] ?? '';
+$contrasenia = $_POST['txtpassword'] ?? '';
 
-$conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
-if (!$conn) 
-{
-	die("No hay conexión: ".mysqli_connect_error());
+// Conexión a la base de datos
+$conn = new mysqli("localhost", "root", "", "login_db");
+
+if ($conn->connect_error) {
+    echo json_encode(["success" => false, "message" => "Error de conexión"]);
+    exit;
 }
 
-$nombre = $_POST["txtusername"];
-$contrasenia = $_POST["txtpassword"];
+$sql = "SELECT id, nombre FROM usuarios WHERE usuario = ? AND contrasenia = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ss", $usuario, $contrasenia);
+$stmt->execute();
+$result = $stmt->get_result();
 
-$query = mysqli_query($conn,"SELECT * FROM usuario WHERE nombreUsuario = '".$nombre."' and contrasenia = '".$contrasenia."'");
-$nr = mysqli_num_rows($query);
-
-if($nr == 1)
-{
-	header("Location: principal.html");
-	exit;
+if ($result->num_rows === 1) {
+    $usuarioData = $result->fetch_assoc();
+    echo json_encode(["success" => true, "id" => $usuarioData['id'], "nombre" => $usuarioData['nombre']]);
+} else {
+    echo json_encode(["success" => false, "message" => "Usuario o contraseña incorrectos"]);
 }
-else if ($nr == 0) 
-{
-	header("Location: login.html");
-	exit;
-}
-	
 
-
+$conn->close();
 ?>

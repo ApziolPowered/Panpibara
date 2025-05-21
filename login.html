@@ -146,17 +146,49 @@
     </style>
 </head>
 <body>
-    <form method="post" action="login.php">
-        <div class="login-container">
-            <h2>Inicio de sesión</h2>
-            <img src="Imagenes/footer.png" alt="Logogin" style="width: 200px;">
-            <input type="text" name="txtusername" placeholder="Usuario" required>
-            <input type="password" name="txtpassword" placeholder="Contrasenia" required>
-            <button type="submit">Ingresar</button><br><br>
-            <button type="button" onclick="mostrarRegistro()">Registrarse</button>
-            <div class="link" onclick="mostrarRecuperacion()">¿Olvidaste tu contraseña?</div>
-        </div>
-    </form>
+    <form id="loginForm">
+    <div class="login-container">
+        <h2>Inicio de sesión</h2>
+        <img src="Imagenes/footer.png" alt="Logogin" style="width: 200px;">
+        <input type="text" id="txtusername" placeholder="Usuario" required>
+        <input type="password" id="txtpassword" placeholder="Contrasenia" required>
+        <button type="submit">Ingresar</button><br><br>
+        <button type="button" onclick="mostrarRegistro()">Registrarse</button>
+        <div class="link" onclick="mostrarRecuperacion()">¿Olvidaste tu contraseña?</div>
+    </div>
+</form>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const usuario = document.getElementById('txtusername').value;
+    const contrasenia = document.getElementById('txtpassword').value;
+
+    const formData = new FormData();
+    formData.append('txtusername', usuario);
+    formData.append('txtpassword', contrasenia);
+
+    const response = await fetch('login.php', {
+        method: 'POST',
+        body: formData
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        // Guardar en localStorage
+        localStorage.setItem('usuarioID', result.id);
+        localStorage.setItem('usuarioNombre', result.nombre);
+
+        alert('Bienvenido ' + result.nombre);
+        window.location.href = 'principal.html'; // Redirecciona después del login
+    } else {
+        alert(result.message);
+    }
+});
+</script>
+
 
     <!-- Modal de Registro -->
     <div id="modalRegistro" class="modal">
