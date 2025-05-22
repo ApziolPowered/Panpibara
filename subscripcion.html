@@ -123,7 +123,7 @@
                             <a href="principal.html" style="font-size: 25px; text-decoration: none; color: white;">Pagina principal</a>
                         </li>
                         <li>
-                            <a href="#" style="font-size: 25px; text-decoration: none; color: white;">Suscripciones</a>
+                            <a href="panpibarapedidos.html" style="font-size: 25px; text-decoration: none; color: white;">Suscripciones</a>
                         </li>
                         
                         <li>
@@ -156,7 +156,7 @@
       <li>✔ 10% de descuento en productos seleccionados</li>
       <li>✔ Acceso a promociones exclusivas</li>
     </ul><br><br><br><br>
-    <button class="btn-suscribirse">Suscribirse</button>
+    <button class="btn-suscribirseB">Suscribirse</button>
   </div>
 
   <div class="plan" style="border-top-color: #A67B5B;">
@@ -167,7 +167,7 @@
       <li>✔ 15% de descuento en todos los productos</li>
       <li>✔ Descuentos en eventos especiales</li>
     </ul><br><br><br><br>
-    <button class="btn-suscribirse">Suscribirse</button>
+    <button class="btn-suscribirseE">Suscribirse</button>
   </div>
 
   <div class="plan" style="border-top-color: #8B5E3C;">
@@ -180,7 +180,7 @@
       <li>✔ Acceso prioritario en tienda</li>
     </ul>
     <div class="highlight">Más popular</div><br>
-    <button class="btn-suscribirse">Suscribirse</button>
+    <button class="btn-suscribirseP">Suscribirse</button>
   </div>
 </div>
 
@@ -188,19 +188,62 @@
     
   </main>
 <script>
-  document.querySelectorAll('.btn-suscribirse').forEach(button => {
-    button.addEventListener('click', function() {
-      const usernameText = document.getElementById('username').textContent.toLowerCase();
+  function suscribirse(tipoSuscripcion) {
+    const usernameText = document.getElementById('username').textContent.toLowerCase();
 
-      if (usernameText.includes('premium')) {
-        alert('✅ Suscripción actualmente activa.');
-      } else {
-        alert('🔔 Redirigiendo a proceso de suscripción...');
-        // Aquí podrías redirigir si lo deseas
-        // window.location.href = 'procesarSuscripcion.html';
-      }
+    fetch('suscribirse.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `username=${encodeURIComponent(usernameText)}&membresia=${tipoSuscripcion}`
+    })
+    .then(response => response.text())
+    .then(data => {
+      alert(data); // puedes personalizar según la respuesta de PHP
+      localStorage.setItem('membresia', tipoSuscripcion); // actualiza localStorage también
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('❌ Error al procesar la suscripción.');
     });
+  }
+
+  document.querySelectorAll('.btn-suscribirseB').forEach(button => {
+  button.addEventListener('click', function () {
+    const userSub = parseInt(localStorage.getItem('membresia')) || 0;
+
+    if (userSub === 3 || userSub === 4 || userSub === 2 ) {
+      alert('✅ Ya tienes una suscripción igual o mejor activa.');
+    } else {
+      suscribirse(3); // Activar suscripción Básica
+    }
   });
+});
+
+  document.querySelectorAll('.btn-suscribirseB').forEach(button => {
+  button.addEventListener('click', function () {
+    const userSub = parseInt(localStorage.getItem('membresia')) || 0;
+
+    if (userSub === 3 || userSub === 4 || userSub === 2) {
+      alert('✅ Ya tienes una suscripción igual o mejor activa.');
+    } else {
+      suscribirse(4); // Activar suscripción Básica
+    }
+  });
+});
+
+  document.querySelectorAll('.btn-suscribirseB').forEach(button => {
+  button.addEventListener('click', function () {
+    const userSub = parseInt(localStorage.getItem('membresia')) || 0;
+
+    if (userSub === 3 || userSub === 4 || userSub === 2) {
+      alert('✅ Ya tienes una suscripción igual o mejor activa.');
+    } else {
+      suscribirse(2); // Activar suscripción Básica
+    }
+  });
+});
 </script>
 
 <script>
