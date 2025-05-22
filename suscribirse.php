@@ -12,12 +12,13 @@ if ($conn->connect_error) {
     die("❌ Error de conexión: " . $conn->connect_error);
 }
 
-$username = strtolower(trim($_POST['username']));
-$membresia = intval($_POST['membresia']);
+$userId = isset($_POST['userId']) ? intval($_POST['userId']) : 0;
+$membresia = isset($_POST['membresia']) ? intval($_POST['membresia']) : 0;
 
-if (!empty($username) && in_array($membresia, [2, 3, 4])) {
-    $stmt = $conn->prepare("UPDATE usuario SET membresia = ? WHERE nombreUsuario = ?");
-    $stmt->bind_param("is", $membresia, $username);
+// Validar que los datos sean válidos
+if ($userId > 0 && in_array($membresia, [2, 3, 4])) {
+    $stmt = $conn->prepare("UPDATE usuario SET membresia = ? WHERE id = ?");
+    $stmt->bind_param("ii", $membresia, $userId);
 
     if ($stmt->execute()) {
         echo "✅ Suscripción actualizada correctamente.";
