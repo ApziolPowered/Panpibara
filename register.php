@@ -1,37 +1,55 @@
 <?php
+$conn = new mysqli("localhost", "root", "", "login_db");
 
-$dbhost = "localhost";
-$dbuser = "root";
-$dbpass = "";
-$dbname = "login_db";
-
-$conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
-
-if (!$conn) {
-    die("No hay conexión: " . mysqli_connect_error());
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
 }
 
-$nombreCompleto = $_POST["nombre"];              // Campo del formulario
-$nombreUsuario = $_POST["usuario"];              // Campo del formulario
-$correo = $_POST["correo"];                      // Campo del formulario
-$contrasenia = $_POST["contrasenia"];            // Campo del formulario
+// Recibir datos del formulario
+$nombre = $_POST['nombre'];
+$usuario = $_POST['usuario'];
+$correo = $_POST['correo'];
+$contrasenia = $_POST['contrasenia'];  // Se recomienda encriptar
 
-// Validación opcional: verificar que no exista el usuario
-$verificar = mysqli_query($conn, "SELECT * FROM usuario WHERE nombreUsuario = '$nombreUsuario'");
-if (mysqli_num_rows($verificar) > 0) {
-    echo "<script>alert('El nombre de usuario ya existe'); window.location = 'login.html';</script>";
-    exit();
+// Dirección
+$calle = $_POST['calle'];
+$numero = $_POST['numero'];
+$colonia = $_POST['colonia'];
+$ciudad = $_POST['ciudad'];
+$estado = $_POST['estado'];
+$codigoPostal = $_POST['codigoPostal'];
+$descripcion = $_POST['descripcion'] ?? '';
+
+// Asumimos membresia basica
+$idMembresia = 1;
+
+$conn->begin_transaction();
+
+try {
+    // Insertar usuario
+    $stmtUsuario = $conn->prepare("INSERT INTO usuario (nombreUsuario, nombre, correoElectronico, contrasenia, Membresia_idMembresia) VALUES (?, ?, ?, ?, ?)");
+    $stmtUsuario->bind_param("ssssi", $usuario, $nombre, $correo, $contrasenia, $idMembresia);
+    $stmtUsuario->execute();
+
+    $idUsuario = $conn->insert_id;
+
+    // Insertar dirección
+    $stmtDireccion = $conn->prepare("INSERT INTO direccion (calle, numero, colonia, ciudad, estado, codigoPostal, descripcion, Usuario_idUsuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmtDireccion->bind_param("sssssssi", $calle, $numero, $colonia, $ciudad, $estado, $codigoPostal, $descripcion, $idUsuario);
+    $stmtDireccion->execute();
+
+    $conn->commit();
+
+    echo "<script>
+        alert('Usuario registrado exitosamente');
+        window.location.href = 'login.html';
+    </script>";
+
+} catch (Exception $e) {
+    $conn->rollback();
+    echo "Error al registrar usuario: " . $e->getMessage();
 }
 
-// Insertar nuevo usuario (sin membresía por defecto, se puede poner NULL o un ID si ya hay una)
-$sql = "INSERT INTO usuario (nombreUsuario, nombre, correoElectronico, contrasenia, Membresia_idMembresia)
-        VALUES ('$nombreUsuario', '$nombreCompleto', '$correo', '$contrasenia', NULL)";
-
-if (mysqli_query($conn, $sql)) {
-    echo "<script>alert('usuario registrado exitosamente'); window.location = 'login.html';</script>";
-} else {
-    echo "Error al registrar: " . mysqli_error($conn);
-}
-
-mysqli_close($conn);
+$conn->close();
 ?>
+

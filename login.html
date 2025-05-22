@@ -194,30 +194,126 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
 
     <!-- Modal de Registro -->
     <div id="modalRegistro" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="cerrarRegistro()">&times;</span>
-            <h2 style="text-align: center;">Registro de Usuario</h2>
-            <form method="post" action="Registro.php">
-                <input type="text" name="nombre" placeholder="Nombre completo" required>
-                <input type="text" name="usuario" placeholder="Usuario" required>
-                <input type="email" name="correo" placeholder="Correo electrónico" required>
-                <input type="password" name="contrasenia" placeholder="Contraseña" required>
-                <button type="submit">Registrar</button>
-            </form>
-        </div>
+    <div class="modal-content">
+        <span class="close" onclick="cerrarRegistro()">&times;</span>
+        <h2 style="text-align: center;">Registro de Usuario</h2>
+        <form method="post" action="register.php">
+            <input type="text" name="nombre" placeholder="Nombre completo" required>
+            <input type="text" name="usuario" placeholder="Usuario" required>
+            <input type="email" name="correo" placeholder="Correo electrónico" required>
+            <input type="password" name="contrasenia" placeholder="Contraseña" required>
+
+            <!-- Dirección -->
+            <input type="text" name="calle" placeholder="Calle" required>
+            <input type="text" name="numero" placeholder="Número" required>
+            <input type="text" name="colonia" placeholder="Colonia" required>
+            <input type="text" name="ciudad" placeholder="Ciudad" required>
+            <input type="text" name="estado" placeholder="Estado" required>
+            <input type="text" name="codigoPostal" placeholder="Código Postal" required>
+            <input type="text" name="descripcion" placeholder="Descripción (opcional)">
+
+            <button type="submit">Registrar</button>
+        </form>
     </div>
+</div>
+
 
     <!-- Modal de Recuperación de Contraseña -->
     <div id="modalRecuperacion" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="cerrarRecuperacion()">&times;</span>
-            <h2>Recuperar Contraseña</h2>
-            <form method="post" action="Recuperar.php">
-                <input type="email" name="correo_recuperacion" placeholder="Ingresa tu correo" required>
-                <button type="submit">Enviar código</button>
-            </form>
-        </div>
+  <div class="modal-content">
+    <span class="close" onclick="cerrarRecuperacion()">&times;</span>
+    <h2>Recuperar Contraseña</h2>
+
+    <!-- Paso 1: Ingresar correo -->
+    <div id="pasoCorreo">
+      <input type="email" id="correo_recuperacion" placeholder="Ingresa tu correo" required>
+      <button onclick="enviarCodigo()">Enviar código</button>
     </div>
+
+    <!-- Paso 2: Ingresar código (inicialmente oculto) -->
+    <div id="pasoCodigo" style="display: none; margin-top: 10px;">
+      <input type="text" id="codigoIngresado" placeholder="Escribe el código recibido" required>
+      <button onclick="verificarCodigo()">Verificar</button>
+    </div>
+
+    <!-- Paso 3: Cambiar contraseña (opcional, aún oculto) -->
+    <div id="pasoNuevaContrasenia" style="display: none; margin-top: 10px;">
+      <input type="password" id="nuevaContrasenia" placeholder="Nueva contraseña" required>
+      <button onclick="cambiarContrasenia()">Cambiar contraseña</button>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+let codigoGenerado = "";
+let correoUsuario = "";
+
+function enviarCodigo() {
+  const correo = document.getElementById("correo_recuperacion").value;
+  if (!correo) {
+    alert("Por favor ingresa tu correo");
+    return;
+  }
+
+  correoUsuario = correo;
+  codigoGenerado = Math.floor(100000 + Math.random() * 900000).toString();
+
+  fetch("Recuperar.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `correo=${encodeURIComponent(correo)}&codigo=${encodeURIComponent(codigoGenerado)}`
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert("Código enviado a tu correo");
+    console.log("Código generado (pruebas):", codigoGenerado);
+    document.getElementById("pasoCorreo").style.display = "none";
+    document.getElementById("pasoCodigo").style.display = "block";
+  })
+  .catch(err => {
+    console.error("Error:", err);
+    alert("No se pudo enviar el código.");
+  });
+}
+
+function verificarCodigo() {
+  const ingresado = document.getElementById("codigoIngresado").value;
+  if (ingresado === codigoGenerado) {
+    alert("Código verificado. Ahora puedes cambiar tu contraseña.");
+    document.getElementById("pasoCodigo").style.display = "none";
+    document.getElementById("pasoNuevaContrasenia").style.display = "block";
+  } else {
+    alert("Código incorrecto.");
+  }
+}
+
+function cambiarContrasenia() {
+  const nueva = document.getElementById("nuevaContrasenia").value;
+  if (!nueva) {
+    alert("Ingresa una nueva contraseña.");
+    return;
+  }
+
+  fetch("CambiarContrasenia.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `correo=${encodeURIComponent(correoUsuario)}&contrasenia=${encodeURIComponent(nueva)}`
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert("Contraseña actualizada con éxito");
+    location.reload();
+  })
+  .catch(err => {
+    console.error("Error:", err);
+    alert("Error al cambiar la contraseña");
+  });
+}
+</script>
+
+
 
     <script>
         function mostrarRegistro() {
