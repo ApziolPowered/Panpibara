@@ -13,7 +13,7 @@ if ($conn->connect_error) {
     exit;
 }
 
-$sql = "SELECT idUsuario, nombre FROM usuario WHERE nombreUsuario = ? AND contrasenia = ?";
+$sql = "SELECT idUsuario, nombre, Membresia_idMembresia FROM usuario WHERE nombreUsuario = ? AND contrasenia = ?";
 $stmt = $conn->prepare($sql);
 
 if (!$stmt) {
@@ -33,7 +33,8 @@ if ($result->num_rows === 1) {
     echo json_encode([
         "success" => true,
         "id" => $usuarioData['idUsuario'],
-        "nombre" => $usuarioData['nombre']
+        "nombre" => $usuarioData['nombre'],
+        "membresia" => $usuarioData['Membresia_idMembresia']
     ]);
 } else {
     echo json_encode(["success" => false, "message" => "Usuario o contraseña incorrectos"]);
