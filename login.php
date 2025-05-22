@@ -13,18 +13,32 @@ if ($conn->connect_error) {
     exit;
 }
 
-$sql = "SELECT id, nombre FROM usuarios WHERE usuario = ? AND contrasenia = ?";
+$sql = "SELECT idUsuario, nombre FROM usuario WHERE nombreUsuario = ? AND contrasenia = ?";
 $stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Error en la preparación: " . $conn->error
+    ]);
+    exit;
+}
+
 $stmt->bind_param("ss", $usuario, $contrasenia);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows === 1) {
     $usuarioData = $result->fetch_assoc();
-    echo json_encode(["success" => true, "id" => $usuarioData['id'], "nombre" => $usuarioData['nombre']]);
+    echo json_encode([
+        "success" => true,
+        "id" => $usuarioData['idUsuario'],
+        "nombre" => $usuarioData['nombre']
+    ]);
 } else {
     echo json_encode(["success" => false, "message" => "Usuario o contraseña incorrectos"]);
 }
 
 $conn->close();
 ?>
+
