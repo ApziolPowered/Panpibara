@@ -131,7 +131,7 @@
                         </li>
                         
                         <li>
-                            <a href="#" style="font-size: 25px; text-decoration: none; color: white;">Tienda</a>
+                            <a href = "#" onclick="Tienda(); return false;" style="font-size: 25px; text-decoration: none; color: white;">Tienda</a>
                         </li>
                     </ul>
                 </nav>
@@ -201,6 +201,27 @@
       }
     });
   });
+</script>
+
+<script>
+    const usuarioID = localStorage.getItem('usuarioID');
+    const usuarioNombre = localStorage.getItem('usuarioNombre');
+  document.addEventListener('DOMContentLoaded', () => {
+
+    if (usuarioID && usuarioNombre) {
+      console.log('ID:', usuarioID);
+      console.log('Nombre:', usuarioNombre);
+    } 
+  });
+
+
+  function Tienda() {
+        localStorage.setItem('usuarioID', usuarioID);
+        localStorage.setItem('usuarioNombre', usuarioNombre);
+
+        window.location.href = 'panpibarapedidos.html'; // Redirecciona después del login
+  }
+
 </script>
 
 </body>

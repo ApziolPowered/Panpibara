@@ -363,16 +363,17 @@
         <ul style="display: flex; gap: 20px; list-style: none;">
           <li><a href="principal.html" style="font-size: 25px; color: white; text-decoration: none;">Página principal</a></li>
           <li><a href="subscripcion.html" style="font-size: 25px; color: white; text-decoration: none;">Membresias</a></li>
-          <li><a href="#" style="font-size: 25px; color: white; text-decoration: none;">Sobre nosotros</a></li>
           <li><a href="panpibaracafe.html" style="font-size: 25px; color: white; text-decoration: none;">Menú</a></li>
           <li><a href="#" style="font-size: 25px; color: white; text-decoration: none;">Ubicación</a></li>
         </ul>
       </nav>
-      <div style="display: flex; align-items: center; gap: 10px;">
-        <img src="Imagenes/imagenPerfil.webp" alt="Perfil" style="width: 50px; height: 50px; border-radius: 50%;">
-        <span style="color: white; font-size: 20px;">Usuario</span>
-        
-      </div>
+            <!-- Imagen de perfil y nombre de usuario -->
+             <a href="login.html" style="text-decoration: none;">
+            <div id="user-profile" style="display: flex; align-items: center; gap: 10px;">
+                <img src="Imagenes/imagenPerfil.webp" alt="Perfil" style="width: 50px; height: 50px; border-radius: 100%; border: 2px solid white;">
+                <span id="username" style="font-size: 20px; color: white;">Acceder</span>
+            </div>
+            </a>
       
     </div>
   </header>
@@ -407,15 +408,14 @@
       <img src="Imagenes/logo_blanco2.png" alt="Mi imagen2" style="width: 250px; height: 100px;">
     </div>
     <h2 class="modal-header">Recibo de compra</h2>
+    
     <div id="receiptContent">
       
     </div>
     <button onclick="closeReceiptModal()" class="btn-confirmar">
       Cerrar
     </button>
-    <button onclick="ConfirmarPedido()" class="btn-confirmar">
-      Confirmar Pedido
-    </button>
+
     
   </div>
 </div>
@@ -439,175 +439,236 @@
     </div>
   </footer>
 
-  <script>
-    const carrito = [];
+<script>
+  const usuarioID = localStorage.getItem('usuarioID');
+  const usuarioNombre = localStorage.getItem('usuarioNombre');
+  document.addEventListener('DOMContentLoaded', () => {
 
-function agregarCarrito(nombre, precio) {
-  const index = carrito.findIndex(item => item.nombre === nombre);
+    if (usuarioID && usuarioNombre) {
+      console.log('ID:', usuarioID);
+      console.log('Nombre:', usuarioNombre);
+    } 
+  });
+  const carrito = [];
+
+function agregarCarrito(idProducto, nombre, precio) {
+  const index = carrito.findIndex(item => item.id === idProducto);
   if (index !== -1) {
     carrito[index].cantidad += 1;
   } else {
-    carrito.push({ nombre, precio, cantidad: 1 });
+    carrito.push({ id: idProducto, nombre, precio, cantidad: 1 });
   }
   actualizarCarrito();
   mostrarAviso();
 }
 
 
-    function mostrarAviso() {
-      const aviso = document.getElementById('aviso');
-      aviso.style.display = 'block';
-
-      // Ocultar después de 5 segundos
-      setTimeout(() => {
-        aviso.style.display = 'none';
-      }, 2000);
-    }
-
-function actualizarCarrito() {
-  const lista = document.getElementById("lista-carrito");
-  const totalTexto = document.getElementById("total-carrito");
-  lista.innerHTML = '';
-
-  let total = 0;
-
-  carrito.forEach((item, index) => {
-    const li = document.createElement('li');
-
-    li.innerHTML = `
-      <span>${item.nombre}</span>
-      <input type="number" min="1" value="${item.cantidad}" class="input-cantidad" 
-             onchange="cambiarCantidad(${index}, this.value)">
-      <span>$${(item.precio * item.cantidad).toFixed(2)}</span>
-    `;
-
-    lista.appendChild(li);
-    total += item.precio * item.cantidad;
-  });
-
-  totalTexto.textContent = `Total: $${total.toFixed(2)}`;
-}
-
-function cambiarCantidad(index, nuevaCantidad) {
-  const cantidad = parseInt(nuevaCantidad);
-  if (isNaN(cantidad) || cantidad < 1) {
-    carrito.splice(index, 1); // Eliminar si se pone 0 o valor inválido
-  } else {
-    carrito[index].cantidad = cantidad;
-  }
-  actualizarCarrito();
-}
 
 
+      function mostrarAviso() {
+        const aviso = document.getElementById('aviso');
+        aviso.style.display = 'block';
 
-    function abrirCarrito() {
-      document.getElementById('carrito-modal').style.display = 'block';
-    }
+        // Ocultar después de 5 segundos
+        setTimeout(() => {
+          aviso.style.display = 'none';
+        }, 2000);
+      }
 
-    function cerrarCarrito() {
-      document.getElementById('carrito-modal').style.display = 'none';
-    }
+  function actualizarCarrito() {
+    const lista = document.getElementById("lista-carrito");
+    const totalTexto = document.getElementById("total-carrito");
+    lista.innerHTML = '';
 
-    function scrollIzquierda(btn) {
-      const scroll = btn.parentElement.querySelector('.producto-scroll');
-      scroll.scrollBy({ left: -300, behavior: 'smooth' });
-    }
+    let total = 0;
 
-    function scrollDerecha(btn) {
-      const scroll = btn.parentElement.querySelector('.producto-scroll');
-      scroll.scrollBy({ left: 300, behavior: 'smooth' });
-    }
+    carrito.forEach((item, index) => {
+      const li = document.createElement('li');
 
-    document.addEventListener('DOMContentLoaded', () => {
-      fetch('conexionPedidos.php')
-        .then(response => response.json())
-        .then(data => mostrarProductos(data))
-        .catch(error => console.error('Error al cargar productos:', error));
+      li.innerHTML = `
+        <span>${item.nombre}</span>
+        <input type="number" min="1" value="${item.cantidad}" class="input-cantidad" 
+              onchange="cambiarCantidad(${index}, this.value)">
+        <span>$${(item.precio * item.cantidad).toFixed(2)}</span>
+      `;
+
+      lista.appendChild(li);
+      total += item.precio * item.cantidad;
     });
 
-    function mostrarProductos(productos) {
-  if (!productos || productos.length === 0) {
-    document.body.insertAdjacentHTML('beforeend', '<p style="color:red;">No se cargaron productos</p>');
-    return;
+    totalTexto.textContent = `Total: $${total.toFixed(2)}`;
   }
 
-  const categorias = {};
+  function cambiarCantidad(index, nuevaCantidad) {
+    const cantidad = parseInt(nuevaCantidad);
+    if (isNaN(cantidad) || cantidad < 1) {
+      carrito.splice(index, 1); // Eliminar si se pone 0 o valor inválido
+    } else {
+      carrito[index].cantidad = cantidad;
+    }
+    actualizarCarrito();
+  }
 
-  productos.forEach(p => {
-    const key = p.categoria;
-    if (!categorias[key]) categorias[key] = [];
-    categorias[key].push(p);
-  });
 
-  const contenedor = document.body;
 
-  Object.keys(categorias).forEach(categoria => {
-    const seccion = document.createElement('div');
-    seccion.classList.add('contenedor-scroll');
-    seccion.innerHTML = `
-      <h2 class="categoria">${categoria}</h2>
-      <div class="producto-scroll-wrapper">
-        <button class="scroll-btn izq" onclick="scrollIzquierda(this)">←</button>
-        <div class="producto-scroll">
-          ${categorias[categoria].map(prod => {
-            const imagen = prod.imagen_url ? prod.imagen_url : 'imagenes/default.jpg'; //  Imagen por defecto
-            return `
-              <div class="card">
-                <img src="${imagen}" alt="${prod.nombre}">
-                <h3>${prod.nombre}</h3>
-                <p>$${parseFloat(prod.precio).toFixed(2)}</p>
-                <button onclick="agregarCarrito('${prod.nombre}', ${parseFloat(prod.precio)})">Agregar</button>
-              </div>
-            `;
-          }).join('')}
+      function abrirCarrito() {
+        document.getElementById('carrito-modal').style.display = 'block';
+      }
+
+      function cerrarCarrito() {
+        document.getElementById('carrito-modal').style.display = 'none';
+      }
+
+      function scrollIzquierda(btn) {
+        const scroll = btn.parentElement.querySelector('.producto-scroll');
+        scroll.scrollBy({ left: -300, behavior: 'smooth' });
+      }
+
+      function scrollDerecha(btn) {
+        const scroll = btn.parentElement.querySelector('.producto-scroll');
+        scroll.scrollBy({ left: 300, behavior: 'smooth' });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        fetch('conexionPedidos.php')
+          .then(response => response.json())
+          .then(data => mostrarProductos(data))
+          .catch(error => console.error('Error al cargar productos:', error));
+      });
+
+      function mostrarProductos(productos) {
+    if (!productos || productos.length === 0) {
+      document.body.insertAdjacentHTML('beforeend', '<p style="color:red;">No se cargaron productos</p>');
+      return;
+    }
+
+    const categorias = {};
+
+    productos.forEach(p => {
+      const key = p.categoria;
+      if (!categorias[key]) categorias[key] = [];
+      categorias[key].push(p);
+    });
+
+    const contenedor = document.body;
+
+    Object.keys(categorias).forEach(categoria => {
+      const seccion = document.createElement('div');
+      seccion.classList.add('contenedor-scroll');
+      seccion.innerHTML = `
+        <h2 class="categoria">${categoria}</h2>
+        <div class="producto-scroll-wrapper">
+          <button class="scroll-btn izq" onclick="scrollIzquierda(this)">←</button>
+          <div class="producto-scroll">
+            ${categorias[categoria].map(prod => {
+              const imagen = prod.imagen_url ? prod.imagen_url : 'imagenes/default.jpg'; //  Imagen por defecto
+              return `
+                <div class="card">
+                  <img src="${imagen}" alt="${prod.nombre}">
+                  <h3>${prod.nombre}</h3>
+                  <p>$${parseFloat(prod.precio).toFixed(2)}</p>
+                  <button onclick="agregarCarrito(${prod.idProducto}, '${prod.nombre}', ${parseFloat(prod.precio)})">Agregar</button>
+
+                </div>
+              `;
+            }).join('')}
+          </div>
+          <button class="scroll-btn der" onclick="scrollDerecha(this)">→</button>
         </div>
-        <button class="scroll-btn der" onclick="scrollDerecha(this)">→</button>
-      </div>
-    `;
-    contenedor.insertBefore(seccion, document.getElementById('carrito-modal'));
-  });
-}
+      `;
+      contenedor.insertBefore(seccion, document.getElementById('carrito-modal'));
+    });
+  }
 
-function vaciarCarrito() {
-  carrito.length = 0; // Vacía el arreglo
-  actualizarCarrito();
-  alert("El carrito ha sido vaciado.");
-}
+  function vaciarCarrito() {
+    carrito.length = 0; // Vacía el arreglo
+    actualizarCarrito();
+    alert("El carrito ha sido vaciado.");
+  }
 
-  function finalizarPedido() {
-  const receiptContent = document.getElementById("receiptContent"); // Aquí va el div donde pones el contenido
+function finalizarPedido() {
+  const receiptContent = document.getElementById("receiptContent");
   receiptContent.innerHTML = ''; // Limpiar contenido previo
 
-  let total = 0;
+  const fechaLine = document.createElement('p');
+  const hoy = new Date();
+  const dia = hoy.getDate().toString().padStart(2, '0');
+  const mes = (hoy.getMonth() + 1).toString().padStart(2, '0');
+  const anio = hoy.getFullYear();
+  fechaLine.textContent = `Fecha: ${dia}/${mes}/${anio}`;
 
+  const clienteLine = document.createElement('p');
+  clienteLine.style.fontWeight = 'bold';
+  clienteLine.textContent = `Cliente: ${usuarioNombre}`;
+
+  const pLine = document.createElement('p');
+  pLine.style.fontWeight = 'bold';
+  pLine.textContent = `Productos:`;
+
+  receiptContent.appendChild(fechaLine);
+  receiptContent.appendChild(clienteLine);
+  receiptContent.appendChild(pLine);
+  let total = 0;
   carrito.forEach(item => {
-    const line = document.createElement('p');
-    line.textContent = `${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}`;
+    const line = document.createElement('div');
+    line.style.display = 'flex';
+    line.style.justifyContent = 'space-between';
+
+    const itemText = document.createElement('span');
+    itemText.textContent = `${item.nombre} x${item.cantidad}`;
+
+    const itemPrice = document.createElement('span');
+    itemPrice.textContent = `$${(item.precio * item.cantidad).toFixed(2)}`;
+
+    line.appendChild(itemText);
+    line.appendChild(itemPrice);
     receiptContent.appendChild(line);
+
     total += item.precio * item.cantidad;
   });
 
-  const totalLine = document.createElement('p');
-  totalLine.style.fontWeight = 'bold';
-  
-  totalLine.textContent = `Total: $${total.toFixed(2)}`;
-  receiptContent.appendChild(totalLine);
+const totalLine = document.createElement('div');
+totalLine.style.display = 'flex';
+totalLine.style.justifyContent = 'space-between';
+totalLine.style.fontWeight = 'bold';
+totalLine.style.borderTop = '1px solid #ccc';
+totalLine.style.marginTop = '10px';
+totalLine.style.paddingTop = '5px';
+
+const totalText = document.createElement('span');
+totalText.textContent = 'Total:';
+
+const totalAmount = document.createElement('span');
+totalAmount.textContent = `$${total.toFixed(2)}`;
+
+totalLine.appendChild(totalText);
+totalLine.appendChild(totalAmount);
+receiptContent.appendChild(totalLine);
+
 
   // Mostrar modal del recibo
   document.getElementById('recibo-modal').style.display = 'flex';
 
-  // Vaciar carrito después de finalizar pedido
-  carrito.length = 0;
-  actualizarCarrito();
+  // Validar usuario
+  const usuarioID = localStorage.getItem('usuarioID');
+  if (!usuarioID || isNaN(parseInt(usuarioID))) {
+    alert("No se ha detectado un usuario válido. Inicia sesión o regístrate.");
+    return;
+  }
+
+
+
 }
 
-function closeReceiptModal() {
-  document.getElementById('recibo-modal').style.display = 'none';
-}
+
+
+  function closeReceiptModal() {
+    document.getElementById('recibo-modal').style.display = 'none';
+  }
 
 
 
 
-  </script>
+</script>
 </body>
 </html>
