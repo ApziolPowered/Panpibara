@@ -53,84 +53,138 @@
         </div>
     </header>
     
-    <img src="Imagenes/cafe.jpg" alt="Café" style="width: 100%;">
-    <p style="font-family: 'Georgia', serif; color: #5a3d31;">
-        <img src="Imagenes/capi1.png" alt="Café" style="width: 40%; float: left; margin-left: 5%; border-radius: 10px;">
-        <br><br>
-        <span style="font-size: 40px; font-weight: bold; display: block; text-align: left;">Un lugar acogedor donde cada detalle cuenta</span>  
-        <br>
-        <span style="font-size: 24px; line-height: 1.6; display: block; text-align: justify; margin-right: 5%;">
-            Cada sorbo en Panpibara es un abrazo cálido. El café fluye desde la tierra
-            hasta tu taza, y en cada paso se siente el amor y la dedicación de   
-            los agricultores que lo cultivan y lo llevan a tu mesa felizmente.  
-            Aquí, los aromas se mezclan con la calidez del ambiente, 
-            donde cada rincón está diseñado para que te sientas en casa.  
-            <br>
-            La madera cruje bajo tus pies, el aroma a pan recién horneado 
-            llena el aire, y cada taza de café es preparada con esmero, 
-            respetando los sabores naturales de cada grano. Desde el primer 
-            momento en que cruzas la puerta, Panpibara te envuelve con su 
-            esencia única, invitándote a relajarte y disfrutar de una pausa  
-            llena de sabor y tranquilidad.
-            <br><br><br><br>
-        </span>
-    </p>
-    
-    <br>
-    <p>
-        <p style="font-family: 'Georgia', serif; color: #5a3d31;">
-            <img src="Imagenes/capi2.png" alt="Café" style="width: 30%; float: right; margin-right: 7%; border-radius: 10px;">
-            <br><br>
-            <span style="font-size: 40px; font-weight: bold; display: block; text-align: left; margin-left: 5%; width: 50%; ">
-                Tradición en cada bocado:<br> Pan Artesanal
-            </span>
-            <br><br>
-            <span style="font-size: 24px; line-height: 1.6; display: block; text-align: justify; margin-left: 5%; width: 50%;">
-                Horneado con paciencia, compartido con alegría. 
-                Nuestros panes cuentan historias de tradición, 
-                ingredientes nobles y el tiempo necesario para 
-                lograr su esencia perfecta.  
-                <br>
-                Cada pieza es el resultado de manos expertas que amasan con 
-                cariño, dejando que la fermentación lenta desarrolle su sabor  
-                auténtico y textura inigualable. Desde el crujiente pan rústico  
-                hasta los suaves bollos con notas dulces, cada bocado es un  
-                homenaje a la panadería artesanal.  
-                <br>
-                En Panpibara, creemos que el buen pan no solo alimenta el cuerpo,  
-                sino que también reconforta el alma.
-                <br> 
-                Disfrútalo solo o acompáñalo  
-                con nuestras mermeladas caseras y una taza de café recién hecho.
-            </span>
-        </p>
-    </p>
-    <br><br><br><br>
-    <p style="font-family: 'Georgia', serif; color: #5a3d31;">
-        <img src="Imagenes/capi3.png" alt="Café" style="width: 40%; float: left; margin-right: 5%; border-radius: 10px;">
-        <br><br><br><br><br>
-        <span style="font-size: 40px; font-weight: bold; display: block; text-align: left;">
-            Un lugar acogedor donde el tiempo se detiene
-        </span>  
-        <br><br>
-        <span style="font-size: 24px; line-height: 1.6; display: block; text-align: justify; margin-right: 5%;">
-            Cada sorbo en Panpibara es un abrazo cálido. El café fluye 
-            desde la tierra hasta tu taza, y en cada paso se siente el 
-            amor y la dedicación de los agricultores que lo cultivan y  
-            lo llevan a tu mesa felizmente.  
-            <br><br>
-            Aquí, el aroma a café recién molido envuelve el ambiente,  
-            mientras la calidez de la madera y la suave iluminación  
-            invitan a disfrutar del momento. Ya sea que busques un  
-            rincón tranquilo para leer o un espacio para compartir  
-            conversaciones inolvidables, en Panpibara siempre hay un  
-            asiento esperando por ti.  
-            <br><br>
-            Más que un café, es una pausa para el alma, un instante  
-            donde el tiempo se desacelera y cada detalle se saborea.  
-        </span>
-    </p>
-    <br><br><br><br><br><br>
+    <style>
+/* Estilos responsivos embebidos */
+@media screen and (max-width: 768px) {
+  .texto-ajustable {
+    font-size: 18px !important;
+  }
+
+  .titulo-ajustable {
+    font-size: 24px !important;
+  }
+
+  .ocultar-en-movil {
+    display: none;
+  }
+
+  .contenido-horizontal {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+  }
+
+  .imagen-fija {
+    width: 40% !important;
+  }
+
+  .texto-fijo {
+    width: 55% !important;
+  }
+}
+
+.contenido-horizontal {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin: 50px 5%;
+  flex-wrap: nowrap;
+}
+
+.imagen-fija {
+  border-radius: 10px;
+}
+
+.texto-fijo {
+  font-family: 'Georgia', serif;
+  color: #5a3d31;
+  text-align: justify;
+  line-height: 1.6;
+}
+</style>
+
+<img src="Imagenes/cafe.jpg" alt="Café" style="width: 100%;">
+
+<!-- SECCIÓN 1 -->
+<div class="contenido-horizontal">
+  <img src="Imagenes/capi1.png" alt="Café" class="imagen-fija" style="width: 40%;">
+
+  <div class="texto-fijo">
+    <span class="titulo-ajustable" style="font-size: 40px; font-weight: bold; display: block; margin-bottom: 20px;">
+      Un lugar acogedor donde cada detalle cuenta
+    </span>
+    <span class="texto-ajustable" style="font-size: 24px;">
+      Cada sorbo en Panpibara es un abrazo cálido. El café fluye desde la tierra
+      hasta tu taza, y en cada paso se siente el amor y la dedicación de   
+      los agricultores que lo cultivan y lo llevan a tu mesa felizmente.
+      <span class="ocultar-en-movil">
+        Aquí, los aromas se mezclan con la calidez del ambiente, 
+        donde cada rincón está diseñado para que te sientas en casa.  
+        La madera cruje bajo tus pies, el aroma a pan recién horneado 
+        llena el aire, y cada taza de café es preparada con esmero, 
+        respetando los sabores naturales de cada grano. Desde el primer 
+        momento en que cruzas la puerta, Panpibara te envuelve con su 
+        esencia única, invitándote a relajarte y disfrutar de una pausa  
+        llena de sabor y tranquilidad.
+      </span>
+    </span>
+  </div>
+</div>
+
+<!-- SECCIÓN 2 completamente corregida -->
+<div class="contenido-horizontal" style="align-items: flex-start;">
+  <div class="texto-fijo" style="padding-right: 30px;">
+    <span class="titulo-ajustable" style="font-size: 40px; font-weight: bold; display: block; margin-bottom: 20px;">
+      Tradición en cada bocado: Pan Artesanal
+    </span>
+    <span class="texto-ajustable" style="font-size: 24px;">
+      Horneado con paciencia, compartido con alegría. 
+      Nuestros panes cuentan historias de tradición, 
+      ingredientes nobles y el tiempo necesario para 
+      lograr su esencia perfecta.
+      <span class="ocultar-en-movil">
+        Cada pieza es el resultado de manos expertas que amasan con 
+        cariño, dejando que la fermentación lenta desarrolle su sabor  
+        auténtico y textura inigualable. Desde el crujiente pan rústico  
+        hasta los suaves bollos con notas dulces, cada bocado es un  
+        homenaje a la panadería artesanal.
+      </span>
+      En Panpibara, creemos que el buen pan no solo alimenta el cuerpo,  
+      sino que también reconforta el alma. Disfrútalo solo o acompáñalo  
+      con nuestras mermeladas caseras y una taza de café recién hecho.
+    </span>
+  </div>
+
+  <img src="Imagenes/capi2.png" alt="Pan" class="imagen-fija" style="width: 30%; margin-left: 50px;">
+</div>
+
+
+<!-- SECCIÓN 3 -->
+<div class="contenido-horizontal">
+  <img src="Imagenes/capi3.png" alt="Ambiente" class="imagen-fija" style="width: 40%;">
+
+  <div class="texto-fijo">
+    <span class="titulo-ajustable" style="font-size: 40px; font-weight: bold; display: block; margin-bottom: 20px;">
+      Un lugar acogedor donde el tiempo se detiene
+    </span>
+    <span class="texto-ajustable" style="font-size: 24px;">
+      Cada sorbo en Panpibara es un abrazo cálido. El café fluye 
+      desde la tierra hasta tu taza, y en cada paso se siente el 
+      amor y la dedicación de los agricultores que lo cultivan y  
+      lo llevan a tu mesa felizmente.
+      <span class="ocultar-en-movil">
+        Aquí, el aroma a café recién molido envuelve el ambiente,  
+        mientras la calidez de la madera y la suave iluminación  
+        invitan a disfrutar del momento. Ya sea que busques un  
+        rincón tranquilo para leer o un espacio para compartir  
+        conversaciones inolvidables, en Panpibara siempre hay un  
+        asiento esperando por ti.
+        Más que un café, es una pausa para el alma, un instante  
+        donde el tiempo se desacelera y cada detalle se saborea.
+      </span>
+    </span>
+  </div>
+</div>
 
 <div class="ubicacion">
     <h2 style="font-size: 70px;" id="menu">Explora nuestras categorías</h2>
@@ -148,14 +202,32 @@
     </div>
 </section>
 
-<div class="ubicacion">
+
+
+<div class="ubicacion" style="text-align: center; margin: 40px auto;">
     <h2 id="ubicacion">Ubicación</h2>
-    <div class="direccion">
-        <p>VENTURA PUENTE 1044<br>Tel. (443) 315 5996</p>
-        <img src="Imagenes/Mapa.png" alt="Mapa de ubicación" style="width: 800px;">
+    <div class="direccion" style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        margin-top: 20px;
+    ">
+        <p style="font-size: 18px; line-height: 1.5;">
+            Morelia, Michoacan. Ventura Puente Num.1044<br>
+            Tel. (443) 315 5996
+        </p>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3732.211360599902!2d-101.17657938503832!3d19.693930686727077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842d0d97c4ab1b8f%3A0x5e4a85c7d6f28d14!2sVentura%20Puente%201044%2C%20Morelia%2C%20Michoac%C3%A1n!5e0!3m2!1ses-419!2smx!4v1716412545796!5m2!1ses-419!2smx"
+            width="100%"
+            height="300"
+            style="border:0; border-radius: 10px; max-width: 90%;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
     </div>
 </div>
-
 <footer class="footer">
     <div>
         <h3 id="politicas">POLÍTICAS</h3>
@@ -173,7 +245,7 @@
     </div>
 </footer>
 
-<!-- Chatbot HTML (añadido al final del body) -->
+
 <button id="chatbot-toggler">
     <span class="material-symbols-rounded">mode_comment</span>
     <span class="material-symbols-rounded">close</span>
