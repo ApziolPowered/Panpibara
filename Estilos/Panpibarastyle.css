@@ -1,0 +1,230 @@
+
+body { font-family: 'Georgia', serif; color: #5a3d31; margin: 0; padding: 0; text-align: center; background-color: #C9A697;}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("ImagenesEstilos/fondo.png") no-repeat center center / cover;
+    opacity: 0.3; /* Ajusta el nivel de opacidad (0 completamente transparente, 1 totalmente visible) */
+    z-index: -1;
+}
+header {
+    background: #6A3F37;
+    color: white;
+    padding: 15px 0;
+    font-family: Arial, sans-serif;
+    font-size: 30px;
+    position: fixed; /* Hace que el header se quede fijo */
+    top: 0; /* Lo fija en la parte superior */
+    left: 0;
+    width: 100%; /* Ocupa todo el ancho */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+            }
+
+
+#top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+nav ul li a:hover,
+nav ul li.active a {
+    background: #90665e;
+    border-radius: 0px;
+}
+
+
+.section {
+    top:200px;
+    display: flex;
+    align-items: center;
+    margin: 50px auto;
+    max-width: 1200px;
+    position: relative;
+}
+.section:nth-child(even) {
+    flex-direction: row-reverse;
+}
+.imagen {
+    width:500px; 
+    height: 500px;
+    
+    object-fit: cover;
+    z-index: 2; /* Mantiene la imagen al frente */
+    margin-right: -200px; /* Hace que se sobreponga con el contenido */
+    clip-path: circle(50%); /* Recorta la imagen para que siempre sea circular */
+    position:relative;
+}
+
+.logo {
+    width: 300px; 
+    height: 80px;
+    text-align: center;
+    
+    border-radius: 0;
+}
+
+.marco{
+    width:750px; 
+    height: 750px;
+    border-radius: 50%;
+    z-index: 2; /* Mantiene la imagen al frente */
+    margin-right: -200px; /* Hace que se sobreponga con el contenido */
+    position:absolute;
+    right: -125px;
+}
+.section:nth-child(even) img {
+    margin-right: 0px;
+    margin-left: -400px;
+}
+
+.marco2{
+    width:750px; 
+    height: 750px;
+    border-radius: 50%;
+    z-index: 2; /* Mantiene la imagen al frente */
+    margin-right: -200px; /* Hace que se sobreponga con el contenido */
+    position:absolute;
+    right: 775px;
+}
+
+.contenedor {
+    width: 1200px; 
+    height: 600px;
+    
+    background-image: url("ImagenesEstilos/contenedor.png"); /* Agrega la imagen */
+    background-size: 100% 90% ;
+    
+    background-repeat: no-repeat;
+    margin-left:200px;
+    position: absolute;
+    right: 100px; /* Ajusta según tu diseño */
+    top: 10px; /* Puedes cambiarlo según necesites */
+    
+    z-index: -1; /* Lo manda detrás del contenido */
+}
+
+
+.contenedor2 {
+    width: 1200px; 
+    height: 600px;
+    
+    background-image: url("ImagenesEstilos/contenedor2.png"); /* Agrega la imagen */
+    background-size: 90% 90% ;
+    background-position:right ;
+    background-repeat: no-repeat;
+    margin-right:400px;
+    position: absolute;
+    left: 200px; /* Ajusta según tu diseño */
+    top: -30px; /* Puedes cambiarlo según necesites */
+    
+    z-index: -1; /* Lo manda detrás del contenido */
+}
+
+
+
+.content {
+    
+    padding: 20px;
+    
+    margin-left: 20px;
+    flex: 2;
+}
+.section:nth-child(even) .content {
+    margin-left: 0;
+    margin-right: 20px;
+    
+}
+h2 {
+    font-size: 30px;
+    text-align: center;
+}
+
+.section:nth-child(even) h2 {
+    text-align: center;
+}
+
+
+
+
+.parrafo1{
+    display: flex;
+    justify-content: space-between;
+    max-width: 570px;
+    border-bottom: 1px dashed #6B4A3B;
+    
+    padding: 2px 0;
+    font-size: 22px;
+    margin-left: 20px;
+}
+.parrafo1 span {
+    white-space: nowrap; /* Evita saltos de línea */
+}
+.parrafo2{
+    display: flex;
+    justify-content: space-between;
+    max-width: 900px;
+    border-bottom: 1px dashed #6B4A3B;
+    
+    padding: 2px 0;
+    font-size: 22px;
+    margin-left: 280px;
+}
+.parrafo2 span {
+    white-space: nowrap; /* Evita saltos de línea */
+}
+
+footer { 
+    background: #333; 
+    color: white; 
+    padding: 10px; 
+    margin-top: 20px;
+    bottom: 0; 
+    width: 100%;
+     
+    background-color: #5B3221;
+    text-align: left;
+}
+.footer {
+    background-color: #6A3F37;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    
+}
+.footer div {
+    flex: 1;
+}
+.footer h3 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 5;
+    margin-left: 1cm;
+}
+.footer a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 5px;
+    margin-left: 1cm;
+}
+
