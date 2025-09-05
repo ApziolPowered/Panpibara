@@ -1,0 +1,142 @@
+<!DOCTYPE html> 
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="Estilos/Panpibarastyle.css" />
+    <script src="js/userData.js"></script>
+    <title>Panpibara - Menú</title>
+</head>
+<body>
+    
+    <header>
+        <div id="top-header" style="display: flex; align-items: center; justify-content: space-between;">
+            <!-- Logo -->
+            
+            <div id="logo">
+                <img class ="logo "src="Imagenes/logo.png" alt="Logo">
+            </div>
+            
+    
+            <!-- Menú de navegación -->
+            <div id="header-image-menu">
+                <nav>
+                    <ul style="display: flex; gap: 20px; list-style: none; padding: 0;">
+                        <li class="active">
+                            <a href="principal.html" style="font-size: 25px; text-decoration: none; color: white;">Pagina principal</a>
+                        </li>
+                        <li>
+                            <a href="subscripcion.html" style="font-size: 25px; text-decoration: none; color: white;">Suscripciones</a>
+                        </li>
+                        
+                        <li>
+                            <a href="panpibaracafe.html" style="font-size: 25px; text-decoration: none; color: white;">Menu</a>
+                        </li>
+                        
+                        <li>
+                             <a href = "#" onclick="Tienda(); return false;" style="font-size: 25px; text-decoration: none; color: white;">Tienda</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+    
+            <!-- Imagen de perfil y nombre de usuario -->
+            <div id="user-profile" style="display: flex; align-items: center; gap: 10px;">
+                <img src="Imagenes/imagenPerfil.webp" alt="Perfil" style="width: 50px; height: 50px; border-radius: 100%; border: 2px solid white;">
+                <span id="username" style="font-size: 20px; color: white;">Acceder</span>
+            </div>
+        </div>
+    </header>
+    
+    <div class="section">
+        <div class="contenedor"></div>
+        <img class="imagen" src="Imagenes/chilaquiles.jpg" alt="Chilaquiles"> 
+        <img class="marco" src="Imagenes/marco-menu.png">
+        <div class="content">
+            <h2>Chilaquiles</h2>
+            <p class="parrafo1"><span>Rojos o verdes</span><span>$65.00</span></p>
+            <p class="parrafo1"><span>Con pollo</span><span>$12.00</span></p>
+            <p class="parrafo1"><span>Con huevo estrellado</span><span></span>$70.00</span></p>
+            <p class="parrafo1"><span>Con arrachera</span><span>$90.00</span></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="contenedor2"></div>
+        <img  class="imagen" src="Imagenes/molletes.jpg" alt="Molletes">
+        <img class="marco2" src="Imagenes/marco-menu.png">
+        <div class="content">
+            <h2>Molletes</h2>
+            <p class="parrafo2"><span>Clásicos con frijoles y queso gratinado</span><span>$50.00</span></p>
+            <p class="parrafo2"><span>Con pico de gallo</span><span>$55.00</span></p>
+            <p class="parrafo2"><span>Con chorizo</span><span>$60.00</span></p>
+            <p class="parrafo2"><span>Con jamón y queso manchego</span><span>$65.00</span></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="contenedor"></div>
+        <img class="imagen" src="Imagenes/baguette.jpg" alt="Baguettes">
+        <img class="marco" src="Imagenes/marco-menu.png">
+        <div class="content">
+            <h2>Baguettes</h2>
+            <p class="parrafo1"><span>De jamon y queso</span><span>$70.00</span></p>
+            <p class="parrafo1"><span>De pollo con aderezo de chipotle</span><span>$80.00</span></p>
+            <p class="parrafo1"><span>Caprese (mozzarella, jitomate, albahaca)</span><span></span>$85.00</span></p>
+            <p class="parrafo1"><span>De Roast beef</span><span>$95.00</span></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="contenedor2"></div>
+        <img class="imagen" src="Imagenes/croissant.jpg" alt="Croissants">
+        <img class="marco2" src="Imagenes/marco-menu.png">
+        <div class="content">
+            <h2>Croissants</h2>
+            <p class="parrafo2"><span>Mantequilla</span><span>$40.00</span></p>
+            <p class="parrafo2"><span>Relleno de jamón y queso</span><span>$55.00</span></p>
+            <p class="parrafo2"><span>Relleno de chocolate</span><span>$50.00</span></p>
+            <p class="parrafo2"><span>Relleno de almendra</span><span>$60.00</span></p>
+        </div>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br>
+    <footer class="footer">
+        <div>
+            <h3>POLÍTICAS</h3>
+            <a href="chi">Términos y Condiciones</a>
+            <a href="chi">Aviso de Privacidad</a>
+            <a href="chi">Devoluciones y Reembolsos</a>
+        </div>
+        <div>
+            <h3>SOBRE NOSOTROS</h3>
+            <a href="chi">Bolsa de trabajo</a>
+            <a href="chi">¿Quiénes somos?</a>
+        </div>
+        <div class="logo">
+            <img src="Imagenes/footer.png" alt="Panpibara Logo" style="height: 150px; width: 160px;">
+            
+        </div>
+    </footer>
+
+
+    <script>
+    const usuarioID = localStorage.getItem('usuarioID');
+    const usuarioNombre = localStorage.getItem('usuarioNombre');
+  document.addEventListener('DOMContentLoaded', () => {
+
+    if (usuarioID && usuarioNombre) {
+      console.log('ID:', usuarioID);
+      console.log('Nombre:', usuarioNombre);
+    } 
+  });
+
+
+  function Tienda() {
+        localStorage.setItem('usuarioID', usuarioID);
+        localStorage.setItem('usuarioNombre', usuarioNombre);
+
+        window.location.href = 'panpibarapedidos.html'; // Redirecciona después del login
+  }
+
+</script>
+</body>
+</html>

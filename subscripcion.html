@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Suscripciones - Panpibara</title>
+  <link rel="stylesheet" href="Estilos/Panpibarastyle.css">
+  <link rel="stylesheet" href="Estilos/styles.css">
+  <script src="js/userData.js"></script>
+  <style>
+    main {
+      padding-top: 120px; /* para que el contenido no quede detrás del header */
+    }
+
+    .suscripcion-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      padding: 2rem;
+    }
+
+    .plan {
+      background-color: #fff;
+      color: #5a3d31;
+      border-radius: 15px;
+      padding: 1.5rem;
+      width: 300px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      text-align: left;
+      border-top: 8px solid #6A3F37;
+    }
+
+    .plan h3 {
+      font-size: 1.5rem;
+      margin-top: 0;
+    }
+
+    .price {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      font-size: 1rem;
+    }
+
+    .features li {
+      margin-bottom: 0.5rem;
+    }
+
+    .highlight {
+      background: #f0e0d6;
+      color: #6A3F37;
+      padding: 0.3rem 0.6rem;
+      border-radius: 5px;
+      display: inline-block;
+      margin-top: 0.7rem;
+    }
+
+    h2 {
+      font-family: 'Georgia', serif;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .btn-suscribirse {
+  margin-top: 1rem;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.plan:nth-child(1) .btn-suscribirse {
+  background-color: #C49A6C;
+}
+.plan:nth-child(1) .btn-suscribirse:hover {
+  background-color: #b18655;
+  transform: scale(1.05);
+}
+
+.plan:nth-child(2) .btn-suscribirse {
+  background-color: #A67B5B;
+}
+.plan:nth-child(2) .btn-suscribirse:hover {
+  background-color: #8f6548;
+  transform: scale(1.05);
+}
+
+.plan:nth-child(3) .btn-suscribirse {
+  background-color: #8B5E3C;
+}
+.plan:nth-child(3) .btn-suscribirse:hover {
+  background-color: #724c30;
+  transform: scale(1.05);
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Header personalizado solo con logo y "Acceder" -->
+  <header>
+    <div id="top-header">
+      <div id="logo">
+        <img src="Imagenes/logo.png" alt="Logo" style="width: auto; height: 80px;" />
+      </div>
+      <div id="header-image-menu">
+                <nav>
+                    <ul style="display: flex; gap: 20px; list-style: none; padding: 0;">
+                        <li class="active">
+                            <a href="principal.html" style="font-size: 25px; text-decoration: none; color: white;">Pagina principal</a>
+                        </li>
+                        <li>
+                            <a href="panpibarapedidos.html" style="font-size: 25px; text-decoration: none; color: white;">Suscripciones</a>
+                        </li>
+                        
+                        <li>
+                            <a href="panpibaracafe.html" style="font-size: 25px; text-decoration: none; color: white;">Menu</a>
+                        </li>
+                        
+                        <li>
+                            <a href = "#" onclick="Tienda(); return false;" style="font-size: 25px; text-decoration: none; color: white;">Tienda</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+      <div id="user-profile" style="display: flex; align-items: center; gap: 10px;">
+        <img src="Imagenes/imagenPerfil.webp" alt="Perfil" style="width: 50px; height: 50px; border-radius: 100%; border: 2px solid white;">
+        <span id="username" style="font-size: 20px; color: white;">Acceder</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main>
+    <div class="container">
+      <h2>Planes de Suscripción Panpibara ☕</h2>
+      <div class="suscripcion-container">
+  <div class="plan" style="border-top-color: #C49A6C;">
+    <h3>Plan Básico</h3>
+    <div class="price">$129 / mes</div>
+    <ul class="features">
+      <li>✔ 1 café gratis por semana</li>
+      <li>✔ 10% de descuento en productos seleccionados</li>
+      <li>✔ Acceso a promociones exclusivas</li>
+    </ul><br><br><br><br>
+    <button class="btn-suscribirse">Suscribirse</button>
+  </div>
+
+  <div class="plan" style="border-top-color: #A67B5B;">
+    <h3>Plan Estándar</h3>
+    <div class="price">$249 / mes</div>
+    <ul class="features">
+      <li>✔ 1 bebida gratis al día</li>
+      <li>✔ 15% de descuento en todos los productos</li>
+      <li>✔ Descuentos en eventos especiales</li>
+    </ul><br><br><br><br>
+    <button class="btn-suscribirse">Suscribirse</button>
+  </div>
+
+  <div class="plan" style="border-top-color: #8B5E3C;">
+    <h3>Plan Premium</h3>
+    <div class="price">$399 / mes</div>
+    <ul class="features">
+      <li>✔ 2 bebidas gratis al día</li>
+      <li>✔ 25% de descuento en todos los productos</li>
+      <li>✔ Regalos mensuales exclusivos</li>
+      <li>✔ Acceso prioritario en tienda</li>
+    </ul>
+    <div class="highlight">Más popular</div><br>
+    <button class="btn-suscribirse">Suscribirse</button>
+  </div>
+</div>
+
+    </div>
+    
+  </main>
+<script>
+  document.querySelectorAll('.btn-suscribirse').forEach(button => {
+    button.addEventListener('click', function() {
+      const usernameText = document.getElementById('username').textContent.toLowerCase();
+
+      const userId = localStorage.getItem('usuarioID');
+      const userName = localStorage.getItem('usuarioNombre');
+      const userSub = localStorage.getItem('membresia');
+
+      if (userId && userName) {
+          console.log("Usuario:", userName, "| ID:", userId, "| Membresia:", userSub);
+      }
+
+      if (usernameText.includes('premium')) {
+        alert('✅ Suscripción actualmente activa.');
+      } else {
+        alert('🔔 Redirigiendo a proceso de suscripción...');
+        // Aquí podrías redirigir si lo deseas
+        // window.location.href = 'procesarSuscripcion.html';
+      }
+    });
+  });
+</script>
+
+<script>
+    const usuarioID = localStorage.getItem('usuarioID');
+    const usuarioNombre = localStorage.getItem('usuarioNombre');
+  document.addEventListener('DOMContentLoaded', () => {
+
+    if (usuarioID && usuarioNombre) {
+      console.log('ID:', usuarioID);
+      console.log('Nombre:', usuarioNombre);
+    } 
+  });
+
+
+  function Tienda() {
+        localStorage.setItem('usuarioID', usuarioID);
+        localStorage.setItem('usuarioNombre', usuarioNombre);
+
+        window.location.href = 'panpibarapedidos.html'; // Redirecciona después del login
+  }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #5a3d31;
+            color: #5a3d31;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('imagenes/fondo.png') no-repeat center center/cover;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .login-container {
+            position: relative;
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            width: 350px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .login-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            z-index: 1;
+        }
+
+        .login-container * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        input {
+            display: block;
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #F0A98B;
+            border-radius: 5px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #5a3d31;
+        }
+
+        button {
+            background-color: #F0A98B;
+            color: white;
+            border: none;
+            padding: 12px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #e08975;
+        }
+
+        .link {
+            color: #FFD4C2;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            width: 350px;
+            position: relative;
+            font-family: 'Georgia', serif;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            font-size: 22px;
+            color: #5a3d31;
+        }
+
+        .modal-content input, .modal-content button {
+            margin-top: 10px;
+        }
+
+        .close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #5a3d31;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <form id="loginForm">
+        <div class="login-container">
+            <h2>Inicio de sesión</h2>
+            <img src="Imagenes/footer.png" alt="Logogin" style="width: 200px;">
+            <input type="text" id="txtusername" name="txtusername" placeholder="Usuario" required>
+            <input type="password" id="txtpassword" name="txtpassword" placeholder="Contrasenia" required>
+
+
+            <button type="submit">Ingresar</button><br><br>
+            <button type="button" onclick="mostrarRegistro()">Registrarse</button>
+            <div class="link" onclick="mostrarRecuperacion()">¿Olvidaste tu contraseña?</div>
+        </div>
+    </form>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const usuario = document.getElementById('txtusername').value;
+    const contrasenia = document.getElementById('txtpassword').value;
+
+    const formData = new FormData();
+    formData.append('txtusername', usuario);
+    formData.append('txtpassword', contrasenia);
+
+    const response = await fetch('login.php', {
+        method: 'POST',
+        body: formData
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        // Guardar en localStorage
+        localStorage.setItem('usuarioID', result.id);
+        localStorage.setItem('usuarioNombre', result.nombre);
+        localStorage.setItem('usuarioSubscripcion', result.membresia);
+
+        alert('Bienvenido ' + result.nombre);
+        window.location.href = 'principal.html'; // Redirecciona después del login
+    } else {
+        alert(result.message);
+    }
+});
+</script>
+
+
+    <!-- Modal de Registro -->
+    <div id="modalRegistro" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarRegistro()">&times;</span>
+        <h2 style="text-align: center;">Registro de Usuario</h2>
+        <form method="post" action="register.php">
+            <input type="text" name="nombre" placeholder="Nombre completo" required>
+            <input type="text" name="usuario" placeholder="Usuario" required>
+            <input type="email" name="correo" placeholder="Correo electrónico" required>
+            <input type="password" name="contrasenia" placeholder="Contraseña" required>
+
+            <!-- Dirección -->
+            <input type="text" name="calle" placeholder="Calle" required>
+            <input type="text" name="numero" placeholder="Número" required>
+            <input type="text" name="colonia" placeholder="Colonia" required>
+            <input type="text" name="ciudad" placeholder="Ciudad" required>
+            <input type="text" name="estado" placeholder="Estado" required>
+            <input type="text" name="codigoPostal" placeholder="Código Postal" required>
+            <input type="text" name="descripcion" placeholder="Descripción (opcional)">
+
+            <button type="submit">Registrar</button>
+        </form>
+    </div>
+</div>
+
+
+    <!-- Modal de Recuperación de Contraseña -->
+    <div id="modalRecuperacion" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="cerrarRecuperacion()">&times;</span>
+    <h2>Recuperar Contraseña</h2>
+
+    <!-- Paso 1: Ingresar correo -->
+    <div id="pasoCorreo">
+      <input type="email" id="correo_recuperacion" placeholder="Ingresa tu correo" required>
+      <button onclick="enviarCodigo()">Enviar código</button>
+    </div>
+
+    <!-- Paso 2: Ingresar código (inicialmente oculto) -->
+    <div id="pasoCodigo" style="display: none; margin-top: 10px;">
+      <input type="text" id="codigoIngresado" placeholder="Escribe el código recibido" required>
+      <button onclick="verificarCodigo()">Verificar</button>
+    </div>
+
+    <!-- Paso 3: Cambiar contraseña (opcional, aún oculto) -->
+    <div id="pasoNuevaContrasenia" style="display: none; margin-top: 10px;">
+      <input type="password" id="nuevaContrasenia" placeholder="Nueva contraseña" required>
+      <button onclick="cambiarContrasenia()">Cambiar contraseña</button>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+let codigoGenerado = "";
+let correoUsuario = "";
+
+function enviarCodigo() {
+  const correo = document.getElementById("correo_recuperacion").value;
+  if (!correo) {
+    alert("Por favor ingresa tu correo");
+    return;
+  }
+
+  correoUsuario = correo;
+  codigoGenerado = Math.floor(100000 + Math.random() * 900000).toString();
+
+  fetch("Recuperar.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `correo=${encodeURIComponent(correo)}&codigo=${encodeURIComponent(codigoGenerado)}`
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert("Código enviado a tu correo");
+    console.log("Código generado (pruebas):", codigoGenerado);
+    document.getElementById("pasoCorreo").style.display = "none";
+    document.getElementById("pasoCodigo").style.display = "block";
+  })
+  .catch(err => {
+    console.error("Error:", err);
+    alert("No se pudo enviar el código.");
+  });
+}
+
+function verificarCodigo() {
+  const ingresado = document.getElementById("codigoIngresado").value;
+  if (ingresado === codigoGenerado) {
+    alert("Código verificado. Ahora puedes cambiar tu contraseña.");
+    document.getElementById("pasoCodigo").style.display = "none";
+    document.getElementById("pasoNuevaContrasenia").style.display = "block";
+  } else {
+    alert("Código incorrecto.");
+  }
+}
+
+function cambiarContrasenia() {
+  const nueva = document.getElementById("nuevaContrasenia").value;
+  if (!nueva) {
+    alert("Ingresa una nueva contraseña.");
+    return;
+  }
+
+  fetch("CambiarContrasenia.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `correo=${encodeURIComponent(correoUsuario)}&contrasenia=${encodeURIComponent(nueva)}`
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert("Contraseña actualizada con éxito");
+    location.reload();
+  })
+  .catch(err => {
+    console.error("Error:", err);
+    alert("Error al cambiar la contraseña");
+  });
+}
+</script>
+
+
+
+    <script>
+        function mostrarRegistro() {
+            document.getElementById('modalRegistro').style.display = 'flex';
+        }
+
+        function cerrarRegistro() {
+            document.getElementById('modalRegistro').style.display = 'none';
+        }
+
+        function mostrarRecuperacion() {
+            document.getElementById('modalRecuperacion').style.display = 'flex';
+        }
+
+        function cerrarRecuperacion() {
+            document.getElementById('modalRecuperacion').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modalRegistro = document.getElementById('modalRegistro');
+            const modalRecuperacion = document.getElementById('modalRecuperacion');
+            if (event.target === modalRegistro) {
+                modalRegistro.style.display = "none";
+            }
+            if (event.target === modalRecuperacion) {
+                modalRecuperacion.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
+
+
